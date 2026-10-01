@@ -9,6 +9,8 @@ pub fn build(b: *std.Build) void {
                 .cpu_arch = .aarch64,
                 .os_tag = .freestanding,
                 .abi = .none,
+                // With the MMU off, memory accesses must be naturally aligned.
+                .cpu_features_add = std.Target.aarch64.featureSet(&.{.strict_align}),
                 .cpu_features_sub = std.Target.aarch64.featureSet(&.{ .fp_armv8, .neon }),
             }),
             .optimize = b.standardOptimizeOption(.{}),
